@@ -359,12 +359,30 @@ Module.preRun = Module.preRun || [ ];
     }
 
     async function loadGameZip() {
+        // STORYBABI : jusqu'à 4 essais (réseau mobile faible)
+        for (let essai = 1; essai <= 4; essai++) {
+            gameZipDownloaded = 0;
+            try {
+                await loadGameZipOnce();
+                return;
+            } catch (e) {
+                console.log("game.zip, essai " + essai + " raté : " + e);
+                if (essai == 4) {
+                    reportError("Could not download game.zip", e);
+                    return;
+                }
+                await new Promise(r => setTimeout(r, 1500 * essai));
+            }
+        }
+    }
 
-        try {
+    async function loadGameZipOnce() {
+
+        {
             let response = await fetch(window.gameZipURL);
 
             if (!response.ok) {
-                reportError("Could not load game.zip: " + response.status + " " + response.statusText);
+                throw new Error(response.status + " " + response.statusText);
             }
 
             gameZipSize = parseInt(response.headers.get('Content-Length'), 10);
@@ -390,8 +408,6 @@ Module.preRun = Module.preRun || [ ];
 
             FS.close(f);
 
-        } catch (e) {
-            reportError("Could not download game.zip", e);
         }
     }
 
