@@ -326,7 +326,7 @@ Module.preRun = Module.preRun || [ ];
         if (dataDownloaded < dataSize || gameZipSize == 0) {
             if (!dataPrompt) {
                 printMessage("");
-                printMessage("Downloading engine...");
+                printMessage("Chargement du jeu (environ 45 Mo, seulement la 1re fois)...");
                 dataPrompt = true;
             }
 
@@ -336,7 +336,7 @@ Module.preRun = Module.preRun || [ ];
 
         if (!gameZipPrompt) {
             printMessage("");
-            printMessage("Downloading game data...");
+            printMessage("Chargement de l'épisode...");
             gameZipPrompt = true;
         }
 
@@ -683,7 +683,7 @@ Module.preRun = Module.preRun || [ ];
             }
 
             printMessage("");
-            printMessage("Preloading game files into browser cache...")
+            printMessage("Préparation des images et des sons...")
             progress(0, catalog.files.length);
 
             for (let i = 0; i < catalog.files.length; i++) {
