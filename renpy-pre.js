@@ -171,6 +171,7 @@ Module.preRun = Module.preRun || [ ];
         printCommon(s);
 
         errorReported = true;
+        statusDiv.classList.add('sb-erreur');
 
         try {
             Module.addRunDependency("error");
@@ -330,6 +331,7 @@ Module.preRun = Module.preRun || [ ];
                 dataPrompt = true;
             }
 
+            if (window.sbProgres) window.sbProgres('data', dataDownloaded, dataSize);
             progress(dataDownloaded, dataSize);
             return;
         }
@@ -340,6 +342,7 @@ Module.preRun = Module.preRun || [ ];
             gameZipPrompt = true;
         }
 
+        if (window.sbProgres) window.sbProgres('zip', gameZipDownloaded, gameZipSize);
         progress(gameZipDownloaded, gameZipSize);
 
     }
